@@ -2,6 +2,8 @@ import axios, { AxiosInstance, AxiosRequestConfig, AxiosError } from 'axios'
 
 export type FetchError = AxiosError | Error
 
+export type FetchConfig = AxiosRequestConfig
+
 export interface IFetcher {
   handleError(error: Error, message?: string): never
   request<T = any>(
