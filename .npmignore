@@ -1,5 +1,8 @@
 docs
 src
+.eslintrc.js
+.gitignore
+.prettierrc
 
 .*.swp
 ._*
