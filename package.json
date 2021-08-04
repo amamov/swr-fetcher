@@ -1,0 +1,26 @@
+{
+  "name": "dummy-apis-jsonplaceholder",
+  "version": "1.0.5",
+  "description": "Free fake API for testing and prototyping. By https://jsonplaceholder.typicode.com",
+  "author": "amamov <amamov@kakao.com>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/amamov/dummy-apis-jsonplaceholder.git"
+  },
+  "bugs": {
+    "url": "https://github.com/amamov/dummy-apis-jsonplaceholder/issues",
+    "email": "amamov@kakao.com"
+  },
+  "homepage": "https://github.com/amamov/dummy-apis-jsonplaceholder#readme",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc",
+    "prepublishOnly": "npm run build"
+  },
+  "devDependencies": {
+    "@types/node": "^16.4.10",
+    "tsc": "^2.0.3",
+    "typescript": "^4.3.5"
+  }
+}
