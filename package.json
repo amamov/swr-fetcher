@@ -1,6 +1,6 @@
 {
   "name": "swr-fetcher",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Advanced fetcher function npm package for React SWR",
   "author": "amamov <amamov@kakao.com>",
   "license": "MIT",
