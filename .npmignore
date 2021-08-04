@@ -1,7 +1,6 @@
 docs
 src
 
-
 .*.swp
 ._*
 .DS_Store

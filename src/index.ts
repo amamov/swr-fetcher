@@ -1,109 +1,137 @@
-export const API_ROOT = "https://jsonplaceholder.typicode.com";
+import axios, { AxiosInstance, AxiosRequestConfig, AxiosError } from 'axios'
 
-type Urls = {
-  index: string;
-  users: {
-    index: string;
-  };
-  posts: {
-    index: string;
-    comments: string;
-  };
-  comments: {
-    index: string;
-  };
-  albums: {
-    index: string;
-  };
-  photos: {
-    index: string;
-  };
-  todos: {
-    index: string;
-  };
-};
+export type FetchError = AxiosError | Error
 
-export const dummyApiUrl = (param: string | number = ""): Urls => ({
-  index: API_ROOT,
-  users: {
-    index: `${API_ROOT}/users/${param}`,
-  },
-  posts: {
-    index: `${API_ROOT}/posts/${param}`,
-    comments: `${API_ROOT}/posts/${param}/comments`,
-  },
-  comments: {
-    index: `${API_ROOT}/comments/${param}`,
-  },
-  albums: {
-    index: `${API_ROOT}/albums/${param}`,
-  },
-  photos: {
-    index: `${API_ROOT}/photos/${param}`,
-  },
-  todos: {
-    index: `${API_ROOT}/todos/${param}`,
-  },
-});
+export interface IFetcher {
+  handleError(error: Error, message?: string): never
+  request<T = any>(
+    config: AxiosRequestConfig,
+    errorMessage?: string,
+  ): Promise<T>
+  get<T = any>(
+    url: string,
+    config?: AxiosRequestConfig,
+    errorMessage?: string,
+  ): Promise<T>
+  post<T = any, R = any>(
+    url: string,
+    data?: R,
+    config?: AxiosRequestConfig,
+    errorMessage?: string,
+  ): Promise<T>
+  put<T = any, R = any>(
+    url: string,
+    data?: R,
+    config?: AxiosRequestConfig,
+    errorMessage?: string,
+  ): Promise<T>
+  patch<T = any, R = any>(
+    url: string,
+    data?: R,
+    config?: AxiosRequestConfig,
+    errorMessage?: string,
+  ): Promise<T>
+  delete<T = any>(url: string, config?: AxiosRequestConfig): Promise<T>
+}
 
-export type DummyUser = {
-  id: number;
-  name: string;
-  username: string;
-  email: string;
-  address: {
-    street: string;
-    suite: string;
-    city: string;
-    zipcode: string;
-    geo: {
-      lat: string;
-      lng: string;
-    };
-    lat: string;
-    lng: string;
-  };
-  phone: string;
-  website: string;
-  company: {
-    name: string;
-    catchPhrase: string;
-    bs: string;
-  };
-};
+export default class Fetcher implements IFetcher {
+  private readonly service: AxiosInstance
 
-export type DummyPost = {
-  userId: number;
-  id: number;
-  title: string;
-  body: string;
-};
+  constructor(
+    private readonly config: AxiosRequestConfig | undefined = undefined,
+  ) {
+    const service = axios.create(this.config)
+    this.service = service
+  }
 
-export type DummyComment = {
-  postId: number;
-  id: number;
-  name: string;
-  email: string;
-  body: string;
-};
+  public handleError<T>(error: Error, message?: string): never {
+    if (axios.isAxiosError(error)) {
+      const axiosError: AxiosError<T> = error
+      if (message) axiosError.message = message
+      throw axiosError
+    } else {
+      if (message) error.message = message
+      throw error
+    }
+  }
 
-export type DummyAlbums = {
-  userId: number;
-  id: number;
-  title: string;
-};
+  public async request<T = any>(
+    config: AxiosRequestConfig,
+    errorMessage?: string,
+  ): Promise<T> {
+    try {
+      const response = await this.service.request<T>(config)
+      return response.data
+    } catch (error) {
+      this.handleError(error, errorMessage)
+    }
+  }
 
-export type DummyPhoto = {
-  albumId: number;
-  id: number;
-  title: string;
-  url: string;
-  thumbnailUrl: string;
-};
+  public async get<T = any>(
+    url: string,
+    config?: AxiosRequestConfig,
+    errorMessage?: string,
+  ): Promise<T> {
+    try {
+      const response = await this.service.get<T>(url, config)
+      return response.data
+    } catch (error) {
+      this.handleError(error, errorMessage)
+    }
+  }
 
-export type DummyTodo = {
-  userId: number;
-  id: number;
-  title: string;
-  completed: boolean;
-};
+  public async post<T = any, R = any>(
+    url: string,
+    data?: R,
+    config?: AxiosRequestConfig,
+    errorMessage?: string,
+  ): Promise<T> {
+    try {
+      const response = await this.service.post<T>(url, data, config)
+      return response.data
+    } catch (error) {
+      this.handleError(error, errorMessage)
+    }
+  }
+
+  public async put<T = any, R = any>(
+    url: string,
+    data?: R,
+    config?: AxiosRequestConfig,
+    errorMessage?: string,
+  ): Promise<T> {
+    try {
+      const response = await this.service.put<T>(url, data, config)
+      return response.data
+    } catch (error) {
+      this.handleError(error, errorMessage)
+    }
+  }
+
+  public async patch<T = any, R = any>(
+    url: string,
+    data?: R,
+    config?: AxiosRequestConfig,
+    errorMessage?: string,
+  ): Promise<T> {
+    try {
+      const response = await this.service.patch<T>(url, data, config)
+      return response.data
+    } catch (error) {
+      this.handleError(error, errorMessage)
+    }
+  }
+
+  public async delete<T = any>(
+    url: string,
+    config?: AxiosRequestConfig,
+    errorMessage?: string,
+  ): Promise<T> {
+    try {
+      const response = await this.service.delete<T>(url, config)
+      return response.data
+    } catch (error) {
+      this.handleError(error, errorMessage)
+    }
+  }
+}
