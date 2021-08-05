@@ -38,7 +38,7 @@ export default function App(): JSX.Element {
 
 const { data: users, error } = useSWR<User[], FetchError>(
   '/api/users',
-  fetcher.post.bind(fetcher),
+  fetcher.post.bind(fetcher, requestData),
 )
 ```
 
