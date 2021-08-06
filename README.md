@@ -1,4 +1,4 @@
-# swr-fetcher
+# [swr-fetcher](https://www.npmjs.com/package/swr-fetcher)
 
 > Advanced OOP principles fetcher npm package for [React SWR](https://github.com/vercel/swr) based in [axios](https://github.com/axios/axios).
 
